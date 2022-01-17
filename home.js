@@ -29,7 +29,7 @@ function GetUserInfo(){
            console.log(result);
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 //alert(mess);
                 var tenn = result['data']['user_name'];
                 var haa = result['data']['image'];
@@ -62,7 +62,7 @@ function LogOutt(){
            console.log(result);
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 sessionStorage.clear();
                 
                 alert(mess);
@@ -85,13 +85,13 @@ function LayDSUser(){
        $.ajax({
         url:"home.php",
         method:"POST",
-        data:{get_user_list: 1, token: tok, start_user_id: 1, count: 10},
+        data:{get_user_list: 1, token: tok, start_user_id: 1, count: 100},
         dataType:"JSON",
         
         success : function (result){
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 //alert(mess);
                 HienThiDsUser(result['data'], idd);
             } else{
@@ -162,7 +162,7 @@ function GetCoversation(idd, tenn){
            
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 //alert(mess);
                 var chatArr = result['data'];
                 MoChat(chatArr, tenn, idDetail);
@@ -193,7 +193,7 @@ $(document).on('click', "#Chat", function () {
            
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 //alert(mess);
                 var chatArr = result['data'];
                 MoChat(chatArr, tenn, idDetail);
@@ -349,7 +349,7 @@ $(document).on('click', "#sendMess", function () {
            
             var dc = result['code'];
             var mess = result['message'];
-            if(dc == 1000){
+            if(dc == '1000'){
                 //alert(mess);  
                 console.log('gui thanh cong');
                 GetCoversation(chatIDOpen, chatName);
@@ -368,7 +368,9 @@ socket.on('connect', () => {
   //  const myID = socket.id;
     console.log(socket.id);
     var userID = sessionStorage.getItem("user_id");
-    DangHoatDong(userID, socket.id);
+    if(userID != null){
+        DangHoatDong(userID, socket.id);
+    }
 });
 
 function DangHoatDong(myid, mySocketId){
@@ -383,6 +385,6 @@ socket.on('KO_THE_DANG_NHAP', () =>{
 socket.on('CO_TIN_NHAN', messa =>{
     var idDetail = messa[0];
     if(chatIDOpen == idDetail && DoiTT2.innerHTML != ''){
-        GetCoversation(idDetail, 1);
+        GetCoversation(idDetail, chatName);
     }
 });
