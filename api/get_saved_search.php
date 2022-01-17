@@ -13,7 +13,7 @@ function GetSearched() {
             $curr_id = $db['id'];
             
             $conn = connectt();
-            $inde  = 1;
+            $inde  = 0;
             if(!empty($_POST['index'])){
                 $inde = $_POST['index'];
             }
@@ -22,9 +22,13 @@ function GetSearched() {
             if(!empty($_POST['count'])){
                 $count = $_POST['count'];
             }
-            
-            $queryy = "Select * from searched where user_id = '$curr_id' and stt < '$inde' "
+            if($inde == 0){
+                $queryy = "Select * from searched where user_id = '$curr_id' "
                     . "order by stt desc limit ".$count;
+            } else{
+                $queryy = "Select * from searched where user_id = '$curr_id' and stt < '$inde' "
+                    . "order by stt desc limit ".$count;
+            }
             $result = mysqli_query($conn, $queryy);
         
             $soR = mysqli_num_rows($result);

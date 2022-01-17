@@ -20,6 +20,11 @@ function GetPost() {
                 $count = $_POST['count'];
             }
             
+            $inde = 0;
+            if(!empty($_POST['index'])){
+                $inde = $_POST['index'];
+            }
+            
             $conn = connectt();
             
             $queryy = "Select * from user where id = '$curr_id'";
@@ -28,9 +33,9 @@ function GetPost() {
             $soR = mysqli_num_rows($result);
         if ($soR > 0){
             $row = array();   
-            $queryy = "Select u.* from user as u, banbe as b where b.tt = 2 "
+                $queryy = "Select u.* from user as u, banbe as b where b.tt = 2 "
                     . "and ((b.user1 = '$curr_id' and b.user2 = u.id) "
-                    . "or (b.user2 = '$curr_id' and b.user1 = u.id)) limit ".$count;
+                    . "or (b.user2 = '$curr_id' and b.user1 = u.id)) and b.stt >= '$inde' limit ".$count;
             $result = mysqli_query($conn, $queryy);
             $soR = mysqli_num_rows($result);
             $db = [];

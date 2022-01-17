@@ -24,10 +24,11 @@ function GetUserInfo() {
             $row = array();
             $row = mysqli_fetch_array($result);           
             
+            if($curr_id != $idd){
             if($row[0] < 2){
                 Respone(1009, []);
                 die();
-            }
+            }}
             $queryy = "Select * from user where id = '$idd'";
             $result = mysqli_query($conn, $queryy);
             

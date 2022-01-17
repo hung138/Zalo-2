@@ -1,6 +1,6 @@
 <?php
 
-//include 'dbCon.php';
+include 'dbCon.php';
 
 function GetListUser() {
     if(empty($_POST['token']) || empty($_POST['start_user_id']) || empty($_POST['count'])){
@@ -57,7 +57,7 @@ function GetListUser() {
     }
 }
 
-//GetListUser();
+GetListUser();
 ?>
 
 

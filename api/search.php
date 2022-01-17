@@ -99,13 +99,14 @@ function GetListPost() {
             $curr_id = $db['id'];
             
             $conn = connectt();
+            
             $keyy = $_POST['keyword'];
             $count = $_POST['count'];
             
-         /*   $inde = 0;
+            $inde = 0;
             if(!empty($_POST['index'])){
                 $inde = $_POST['index'];
-            }*/
+            }
             
             $key_split = explode(' ', $keyy);
             
@@ -116,7 +117,11 @@ function GetListPost() {
             $daLay = [];
             foreach ($key_split as $k) {
 
-            $queryy = "Select * from baiviet where noidung like '%$k%' order by id desc LIMIT ".$count;
+            if($inde == 0){
+                $queryy = "Select * from baiviet where noidung like '%$k%' order by id desc LIMIT ".$count;
+            } else {
+                $queryy = "Select * from baiviet where noidung like '%$k%' and id < '$inde' order by id desc LIMIT ".$count;
+            }
             $result = mysqli_query($conn, $queryy);
         
             $row = array();

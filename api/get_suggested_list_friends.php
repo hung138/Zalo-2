@@ -11,8 +11,10 @@ function GetPost() {
         if($isA == 1){
             $db = DecodeToken($token);
             $curr_id = $db['id'];
+            
+            $inde = 0;
             if(!empty($_POST['index'])){
-                $curr_id = $_POST['index'];
+                $inde = $_POST['index'];
             }
             
             $count = 10;
@@ -28,10 +30,17 @@ function GetPost() {
             $soR = mysqli_num_rows($result);
             $bc = [];
         if ($soR > 0){
-            $row = array();   
+            $row = array();  
+            if($inde == 0){
             $queryy = "Select u.* from user as u, banbe as b where b.tt = 2 "
                     . "and ((b.user1 = '$curr_id' and b.user2 = u.id) "
                     . "or (b.user2 = '$curr_id' and b.user1 = u.id)) ";
+            } else{
+                $queryy = "Select u.* from user as u, banbe as b where b.tt = 2 "
+                    . "and ((b.user1 = '$curr_id' and b.user2 = u.id) "
+                    . "or (b.user2 = '$curr_id' and b.user1 = u.id)) and stt > ".$inde;
+            }
+            
             $result = mysqli_query($conn, $queryy);
             $soR = mysqli_num_rows($result);
             $db = [];

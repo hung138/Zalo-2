@@ -14,21 +14,25 @@ if(empty($_POST['token']) || empty($_POST['partner_id']) || empty($_POST['count'
             
             $conn = connectt();
             $part_id = $_POST['partner_id'];
-            $id = $_POST['index'];
+            $id = 0;
+            if(!empty($_POST['index'])){
+                $id = $_POST['index'];
+            }
             
             $count = $_POST['count'];
             
-            if($id == 0){
-            $queryy = "Select * from chat where (user1 = '$curr_id' and user2 = '$part_id') "
-                    . "or (user1 = '$part_id' and user2 = '$curr_id') order by stt desc limit ".$count;
+          if($id > 0){
+            $queryy = "Select * from chat where ((user1 = '$curr_id' and user2 = '$part_id') "
+                    . "or (user1 = '$part_id' and user2 = '$curr_id')) and stt < ".$id." order by stt desc limit ".$count;
+            
             } else{
                 $queryy = "Select * from chat where (user1 = '$curr_id' and user2 = '$part_id') "
-                    . "or (user1 = '$part_id' and user2 = '$curr_id') and stt < '$id' order by stt desc limit ".$count;
+                    . "or (user1 = '$part_id' and user2 = '$curr_id') order by stt desc limit ".$count;
             }
             $result = mysqli_query($conn, $queryy);
         
             $soR = mysqli_num_rows($result);
-        if ($soR > 0){
+        //if ($soR > 0){
             $row = array();
             $row = mysqli_fetch_all($result);      
             
@@ -93,10 +97,10 @@ if(empty($_POST['token']) || empty($_POST['partner_id']) || empty($_POST['count'
         } else{
             Respone(9992, []);
         }
-        } else{
+      /*  } else{
             // toke is invalid
             Respone(9998, []);
-        }
+        }*/
     }
 }
 GetChat();
