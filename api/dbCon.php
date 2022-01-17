@@ -83,7 +83,7 @@ function Respone($code, $data){
         break;
     }
     
-    $res['code'] = $code;
+    $res['code'] = ''.$code;
     $res['message'] = $mess;
     
     if(count($data) > 0){
